@@ -1,4 +1,5 @@
 const buildProxyArtifact = require('./buildProxyArtifact');
+const path = require('path');
 module.exports = function (httpEvents, serviceName) {
   try {
     checkEvents((httpEvents || []));
@@ -16,6 +17,13 @@ const allowedMethods = {
   'post': true,
   'put': true,
   'delete': true
+};
+
+const contentTypes = {
+  '.html': 'text/html',
+  '.js': 'application/javascript',
+  '.css': 'text/css',
+  '.json': 'application/json'
 };
 
 // Http events must have: method, path
@@ -73,7 +81,8 @@ function getTree (paths) {
       (focus.methods || {}),
       {
         [path.method]: {
-          name: path.functionName
+          name: path.functionName,
+          headers: getHeaders(path.artifact, path.isResource)
         }
       });
   }
@@ -81,9 +90,23 @@ function getTree (paths) {
   return root;
 }
 
+function getHeaders (fileName, isResource) {
+  if (!isResource) {
+    return {
+      "Content-Type": "application/json"
+    };
+  }
+  const extension = path.extname(fileName);
+  return {
+    'Content-Type': (contentTypes[extension] || contentTypes['.js'])
+  };
+}
+
 function split (event) {
   return {
     functionName: event.functionName,
+    artifact: event.artifact,
+    isResource: event.isResource,
     method: (event.eventConfig.method || '').toLowerCase(),
     chunks: chunk(event.eventConfig.path)
   };
