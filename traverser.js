@@ -42,7 +42,7 @@ Traverser.prototype.method = function (method) {
 Traverser.prototype.final = function () {
   const dependency = this.traversals
     .filter(endStep => typeof endStep[1] === 'object'
-      && typeof endStep[1].headers === 'object')
+      && typeof endStep[1].name === 'string')
     [0];
   if (dependency === undefined) {
     return Promise.reject({

@@ -23,7 +23,7 @@ module.exports = function (event) {
           body: `invalid json input: ${e}`
         });
       }
-      return require(`lit.${traversalResult.dependency.name}`)({
+      return Lit(traversalResult.dependency.name)({
         body: body,
         params: traversalResult.params
       })
@@ -33,15 +33,17 @@ module.exports = function (event) {
         isBase64Encoded: false,
         body: typeof response === 'string' ? response : JSON.stringify(response),
       }))
-      .catch(e => Promise.resolve({
-        // if we didn't like it its a bad request!
-        // could 500 here, but that's a little dramatic
-        // its not me, its you!
-        statusCode: 400,
-        headers: {},
-        isBase64Encoded: false,
-        body: e.error
-      }));
+      .catch(e => {
+        return Promise.resolve({
+          // if we didn't like it its a bad request!
+          // could 500 here, but that's a little dramatic
+          // its not me, its you!
+          statusCode: 400,
+          headers: {},
+          isBase64Encoded: false,
+          body: e
+        })
+      });
     })
     .catch(e => Promise.resolve(e));
 };
