@@ -7,12 +7,12 @@ module.exports = function (event) {
 
   path.forEach(p => t.advance(p));
   t.method(method);
-  
+
   return t.final()
     .then(traversalResult => {
       var body = undefined;
       try {
-        body =  method === 'get' || event.body === undefined
+        body = method === 'get' || event.body === undefined
           ? undefined
           : JSON.parse(event.body);
       } catch (e) {

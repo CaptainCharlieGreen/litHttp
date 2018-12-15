@@ -1,6 +1,6 @@
 const buildProxyArtifact = require('./buildProxyArtifact');
 const path = require('path');
-module.exports = function (httpEvents, serviceName) {
+module.exports = function (httpEvents) {
   try {
     checkEvents((httpEvents || []));
   } catch(e) {
@@ -9,7 +9,7 @@ module.exports = function (httpEvents, serviceName) {
   const tree = getTree((httpEvents || [])
     .map(split)
     .sort(pathLength));
-  return buildProxyArtifact(tree, serviceName);
+  return buildProxyArtifact(tree);
 }
 
 const allowedMethods = {

@@ -1,0 +1,22 @@
+{
+  "name": "lit-http",
+  "version": "1.0.0",
+  "description": "",
+  "main": "baseHttpRouter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaptainCharlieGreen/litHttp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaptainCharlieGreen/litHttp/issues"
+  },
+  "homepage": "https://github.com/CaptainCharlieGreen/litHttp#readme",
+  "dependencies": {
+    "aws-sdk": "^2.377.0"
+  }
+}
