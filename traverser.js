@@ -1,3 +1,5 @@
+
+//the newline above is important
 var Traverser = function (pathTree) {
   //a traversal is a tuple of [params, node_in_tree]
   //this state keeps track of valid traversals
