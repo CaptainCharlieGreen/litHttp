@@ -1,5 +1,8 @@
-const apiGateway = require('./apiGateway/apiBuilder');
-
 module.exports = (sdkInfo, eventInfo, implementation) => {
-  return apiGateway(sdkInfo.region, sdkInfo.sdk, eventInfo, implementation);
-}
+  if (sdkInfo.substrate === 'aws') {
+    const apiGateway = require('./apiGateway/apiBuilder');
+    return apiGateway(sdkInfo.region, sdkInfo.sdk, eventInfo, implementation);
+  }
+  const stdHttp = require('./stdHttp/apiBuilder');
+  return stdHttp(eventInfo, implementation);
+};
